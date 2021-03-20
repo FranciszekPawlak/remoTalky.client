@@ -1,0 +1,16 @@
+nav{
+    margin-bottom: 20px;
+}
+nav ul{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 80px;
+    background-color: #3f51b5;
+    list-style: none;
+}
+nav ul li a{
+    font-size: 3vh;
+    color: white;
+}
+
