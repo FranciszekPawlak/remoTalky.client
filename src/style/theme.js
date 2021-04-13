@@ -12,7 +12,7 @@ export const createTheme = (type) =>
   createMuiTheme({
     palette: {
       type,
-      primary: type === "light" ? indigo : pink,
+      // primary: type === "light" ? indigo : pink,
     },
     overrides: {
       MuiList: {

@@ -4,17 +4,17 @@ import "./index.css";
 import { App } from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
-import { ContextProvider } from "./components/Context";
+import { AuthContextProvider } from "./context/AuthContext";
 import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ContextProvider>
-      <Router>
-        <App />
-      </Router>
-    </ContextProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <AuthContextProvider>
+    <Router>
+      <App />
+    </Router>
+  </AuthContextProvider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 

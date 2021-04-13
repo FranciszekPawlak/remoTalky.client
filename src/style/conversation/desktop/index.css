@@ -1,0 +1,17 @@
+.conversation-desktop{
+    display: flex;
+    overflow: hidden;
+    height: calc(100vh - 80px); 
+    padding: 10px;
+}
+
+.desktop-conversations{
+padding: 10px;
+max-width: 40vw;
+border-right: 1px solid #eee;
+}
+
+.desktop-messages{
+    flex-grow: 1;
+    padding: 10px;
+}

@@ -1,0 +1,30 @@
+
+
+.desktop-container{
+    display: flex;
+    height: calc(100vh - 80px); 
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.desktop-messages, .desktop-conversations{
+    height: 100% !important;  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+
+}
+.desktop-conversations{
+    flex-grow: 9;
+}
+.desktop-messages{
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #eee;
+    align-items: center;
+    flex-grow: 1;
+}
+
+

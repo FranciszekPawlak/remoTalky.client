@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Layout } from "./Layout";
 import { useHistory } from "react-router-dom";
-import { Context } from "./Context";
+import { AuthContext } from "../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -16,7 +16,7 @@ import { ResetPassword } from "./ResetPassword";
 
 export const Account = () => {
   const history = useHistory();
-  const { setTheme, theme, user } = useContext(Context);
+  const { setTheme, theme, user } = useContext(AuthContext);
 
   const formPadding = 4;
   const formTitlePadding = 2;

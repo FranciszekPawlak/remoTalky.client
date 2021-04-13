@@ -27,6 +27,12 @@
 .App-link {
   color: #61dafb;
 }
+.conversations-list-container::-webkit-scrollbar {
+  display: none;
+}
+.conversation-content::-webkit-scrollbar {
+  display: none;
+}
 
 @keyframes App-logo-spin {
   from {
@@ -36,3 +42,6 @@
     transform: rotate(360deg);
   }
 }
+
+
+

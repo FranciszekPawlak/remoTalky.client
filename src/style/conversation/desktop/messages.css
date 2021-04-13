@@ -1,0 +1,28 @@
+@keyframes dots{
+    0%{
+    content:"."
+    }
+    50%{
+        content:".."
+    }
+    100%{
+        content:"..."
+    }
+    }
+    
+    .loading-dots::after{
+        content:"";
+        animation: dots 1s infinite;
+    }
+
+    .desktop-messages{
+        display: flex;
+        flex-direction: column;
+        height: calc(100%);
+        overflow-y:scroll;    
+    }
+
+    .desktop-messages::-webkit-scrollbar{
+        display: none;
+    }
+

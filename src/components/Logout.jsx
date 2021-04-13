@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { Context } from "./Context";
+import { AuthContext } from "../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHamburger } from "@fortawesome/free-solid-svg-icons";
 import * as Cookies from "js-cookie";
@@ -10,7 +10,7 @@ import "../style/logout.css";
 
 export const Logout = () => {
   const history = useHistory();
-  const { url, setUser } = useContext(Context);
+  const { url, setUser } = useContext(AuthContext);
 
   const logout = () => {
     apiCall(`${url}/logout`, "GET");

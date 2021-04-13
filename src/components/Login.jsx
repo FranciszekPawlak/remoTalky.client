@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import { Button, Typography } from "@material-ui/core";
-import { Context } from "./Context";
+import { AuthContext } from "../context/AuthContext";
 import * as Cookies from "js-cookie";
 import { apiCall } from "../helpers/apiCall";
 import Alert from "@material-ui/lab/Alert";
@@ -21,7 +21,7 @@ export const Login = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const history = useHistory();
-  const { url, setUser } = useContext(Context);
+  const { url, setUser } = useContext(AuthContext);
 
   const onSubmit = async ({ email, password }) => {
     setLoading(true);

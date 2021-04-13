@@ -1,12 +1,12 @@
 import { useEffect, useContext } from "react";
-import { Context } from "../components/Context";
+import { AuthContext } from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
 import * as Cookies from "js-cookie";
 import { apiCall } from "../helpers/apiCall";
 
 export const useAuth = () => {
   const history = useHistory();
-  const { url, user, setUser } = useContext(Context);
+  const { url, user, setUser } = useContext(AuthContext);
 
   const checkToken = async () => {
     try {
@@ -32,6 +32,7 @@ export const useAuth = () => {
         const cookieUser = Cookies.get("user");
         if (cookieUser) {
           const initialUser = JSON.parse(cookieUser);
+          console.log(initialUser);
           initialUser ? setUser(initialUser) : checkToken();
         } else {
           checkToken();

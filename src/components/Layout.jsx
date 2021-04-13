@@ -9,7 +9,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "../style/layout.css";
-import { Typography } from "@material-ui/core";
 
 export const Layout = ({ children }) => {
   return (

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const apiCall = async (url, method, body) => {
+export const apiCall = async (url, method = "GET", body = null) => {
   const res = await axios({
     method: method,
     url: url,
@@ -10,6 +10,16 @@ export const apiCall = async (url, method, body) => {
     data: body,
     withCredentials: true,
   });
-  console.log("async działa");
   return res;
+};
+
+export const swrCall = async (url) => {
+  const res = await axios({
+    url: url,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  });
+  return res.data;
 };

@@ -1,0 +1,22 @@
+.mobile-conversations-container{
+    height: calc(100vh - 80px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+}
+.mobile-conversations{
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+.mobile-conversations-search{
+    margin-top: 8px !important;
+}
+
+.mobile-conversations-search-icon{
+    cursor:pointer;
+}
+
+.mobile-conversations::-webkit-scrollbar{
+    display: none;
+}

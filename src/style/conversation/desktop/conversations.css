@@ -1,0 +1,42 @@
+.desktop-conversations-container::-webkit-scrollbar{
+    display: none;
+}
+.desktop-conversations-container{
+    height: calc(100% - 60px);
+    overflow-y:scroll;
+}
+
+.conversations-item{
+    display: flex;
+    align-items: center;
+    padding: 8px 8px;
+    margin-bottom: 4;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor:pointer;
+    border: 1px solid #ccc;
+    margin:  4px 0 ;
+    border-radius: 4px;
+}
+.conversations-item:hover{
+border-color: #666;
+}
+
+.conversation-active{
+    font-weight: bold;
+}
+
+.conversation-item-text{
+    margin-left: 20px;
+    margin-right: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.conversation-search{
+    margin-bottom: 8px !important;
+}
+
+.conversation-search-icon{
+    cursor:pointer;
+}

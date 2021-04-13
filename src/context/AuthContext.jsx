@@ -1,11 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
+import io from "socket.io-client";
 
-export const Context = createContext();
+export const AuthContext = createContext();
 
-export const ContextProvider = ({ children }) => {
+export const AuthContextProvider = ({ children }) => {
+  const ENDPOINT = "http://localhost:4001";
+
   const [theme, setThemeValue] = useState("light");
   const [user, setUser] = useState(null);
-
+  const socket = io(ENDPOINT);
   const setTheme = (value) => {
     localStorage.setItem("theme", value);
     setThemeValue(value);
@@ -19,16 +22,17 @@ export const ContextProvider = ({ children }) => {
   }, [,]);
 
   return (
-    <Context.Provider
+    <AuthContext.Provider
       value={{
         theme,
         setTheme,
         user,
         setUser,
+        socket,
         url: "http://localhost:4000",
       }}
     >
       {children}
-    </Context.Provider>
+    </AuthContext.Provider>
   );
 };

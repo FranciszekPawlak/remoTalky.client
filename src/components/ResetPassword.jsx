@@ -1,36 +1,24 @@
 import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { apiCall } from "../helpers/apiCall";
-import { Context } from "./Context";
-import {
-  Button,
-  TextField,
-  Select,
-  MenuItem,
-  Box,
-  Typography,
-  FormControl,
-  InputLabel,
-} from "@material-ui/core";
+import { AuthContext } from "../context/AuthContext";
+import { Button, TextField, Box, Typography } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export const ResetPassword = () => {
-  const { handleSubmit, errors, control } = useForm({
+  const { handleSubmit, errors, register } = useForm({
     mode: "all",
     shouldUnregister: false,
   });
-  const { url } = useContext(Context);
+  const { url } = useContext(AuthContext);
   const [message, setMessage] = useState(null);
-
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const formElementPadding = 1;
   const formTitlePadding = 2;
 
-  const resetPassword = async (e) => {
-    e.preventDefault();
+  const resetPassword = async ({ oldPassword, newPassword }) => {
+    setLoading(true);
     try {
       const res = await apiCall(`${url}/resetPassword`, "POST", {
         oldPassword,
@@ -38,13 +26,13 @@ export const ResetPassword = () => {
       });
 
       setMessage({ status: "success", text: res.data });
-      setOldPassword("");
-      setNewPassword("");
     } catch (err) {
-      console.log(err.response.data.error);
-      setMessage({ status: "error", text: err.response.data.error });
+      err?.response?.data?.error
+        ? setMessage({ status: "error", text: err.response.data.error })
+        : setMessage({ status: "error", text: err.message });
       console.error(err);
     }
+    setLoading(false);
   };
 
   return (
@@ -55,40 +43,34 @@ export const ResetPassword = () => {
         </Typography>
       </Box>
       <Box py={formElementPadding}>
-        <Controller
-          as={TextField}
+        <TextField
           name="oldPassword"
           label="old password"
           type="password"
           variant="outlined"
           autoComplete="current-password"
-          defaultValue={oldPassword}
+          defaultValue=""
           fullWidth={true}
-          onChange={(e) => setOldPassword(e.target.value)}
-          control={control}
+          inputRef={register({
+            required: "Required",
+          })}
           error={!!errors.oldPassword}
           helperText={errors.oldPassword?.message}
-          rules={{
-            required: "Required",
-          }}
         />
       </Box>
       <Box py={formElementPadding}>
-        <Controller
-          as={TextField}
+        <TextField
           name="newPassword"
           label="new password"
           type="password"
           variant="outlined"
-          defaultValue={newPassword}
+          defaultValue=""
           fullWidth={true}
-          onChange={(e) => setNewPassword(e.target.value)}
-          control={control}
+          inputRef={register({
+            required: "Required",
+          })}
           error={!!errors.newPassword}
           helperText={errors.newPassword?.message}
-          rules={{
-            required: "Required",
-          }}
         />
       </Box>
 
@@ -106,7 +88,7 @@ export const ResetPassword = () => {
           type="submit"
           fullWidth={true}
         >
-          reset password
+          reset password {loading ? "..." : null}
         </Button>
       </Box>
     </form>

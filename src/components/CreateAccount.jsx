@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { apiCall } from "../helpers/apiCall";
-import { Context } from "./Context";
+import { AuthContext } from "../context/AuthContext";
 import {
   Button,
   TextField,
@@ -12,31 +12,23 @@ import {
   InputLabel,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export const CreateAccount = () => {
-  const { handleSubmit, errors, control } = useForm({
+  const { handleSubmit, errors, register } = useForm({
     mode: "all",
     shouldUnregister: false,
   });
-  const [username, setUsername] = useState("");
   const [message, setMessage] = useState(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { url } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const [role, setRole] = useState(2);
-  const { url } = useContext(Context);
 
   const formElementPadding = 1;
   const formTitlePadding = 2;
 
-  const addUser = async (e) => {
-    e.preventDefault();
-    console.log({
-      email,
-      username,
-      password,
-      role,
-    });
+  const addUser = async ({ email, username, password }) => {
+    setLoading(true);
     try {
       const res = await apiCall(`${url}/register`, "POST", {
         email,
@@ -46,15 +38,14 @@ export const CreateAccount = () => {
       });
 
       setMessage({ status: "success", text: res.data });
-      setUsername("");
-      setEmail("");
-      setPassword("");
-      setRole(2);
     } catch (err) {
-      console.log(err.response.data);
-      setMessage({ status: "error", text: err.response.data.error });
+      err?.response?.data?.error
+        ? setMessage({ status: "error", text: err.response.data.error })
+        : setMessage({ status: "error", text: err.message });
+
       console.error(err);
     }
+    setLoading(false);
   };
 
   return (
@@ -65,63 +56,54 @@ export const CreateAccount = () => {
         </Typography>
       </Box>
       <Box py={formElementPadding}>
-        <Controller
-          as={TextField}
+        <TextField
           name="username"
           label="username"
           type="text"
           variant="outlined"
-          defaultValue={username}
+          defaultValue=""
           fullWidth={true}
-          onChange={(e) => setUsername(e.target.value)}
-          control={control}
+          inputRef={register({
+            required: "Required",
+          })}
           error={!!errors.username}
           helperText={errors.username?.message}
-          rules={{
-            required: "Required",
-          }}
         />
       </Box>
       <Box py={formElementPadding}>
-        <Controller
-          as={TextField}
+        <TextField
           name="email"
           label="email"
           type="email"
           variant="outlined"
           autoComplete="email"
-          defaultValue={email}
           fullWidth={true}
-          onChange={(e) => setEmail(e.target.value)}
-          control={control}
-          error={!!errors.email}
-          helperText={errors.email?.message}
-          rules={{
+          defaultValue=""
+          inputRef={register({
             required: "Required",
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
               message: "invalid email address",
             },
-          }}
+          })}
+          error={!!errors.email}
+          helperText={errors.email?.message}
         />
       </Box>
       <Box py={formElementPadding}>
-        <Controller
-          as={TextField}
+        <TextField
           className="password"
           name="password"
           label="password"
           type="password"
           variant="outlined"
-          defaultValue={password}
+          defaultValue=""
           fullWidth={true}
-          onChange={(e) => setPassword(e.target.value)}
-          control={control}
+          inputRef={register({
+            required: "Required",
+          })}
           error={!!errors.password}
           helperText={errors.password?.message}
-          rules={{
-            required: "Required",
-          }}
         />
       </Box>
       <Box py={formElementPadding}>
@@ -129,13 +111,11 @@ export const CreateAccount = () => {
           <InputLabel htmlFor="role">Role</InputLabel>
           <Select
             value={role}
-            onChange={(e) => setRole(e.target.value)}
             variant="outlined"
             label="role"
-            inputProps={{
-              name: "role",
-              id: "role",
-            }}
+            name="role"
+            id="role"
+            onChange={(e) => setRole(e.target.value)}
           >
             <MenuItem value={2} selected={true}>
               User
@@ -160,7 +140,7 @@ export const CreateAccount = () => {
           value="add user"
           fullWidth={true}
         >
-          ADD account
+          create account {loading ? "..." : null}
         </Button>
       </Box>
     </form>
