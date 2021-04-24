@@ -13,10 +13,19 @@
     margin-bottom: 4;
     white-space: nowrap;
     overflow: hidden;
-    cursor:pointer;
     border: 1px solid #ccc;
     margin:  4px 0 ;
     border-radius: 4px;
+    justify-content: space-between;
+}
+.conversation-item-text-container{
+    display: flex;
+    align-items: center;
+    cursor:pointer;
+}
+.conversation-video-link{
+    border-left: 1px solid #ddd;
+    padding-left: 8px;
 }
 .conversations-item:hover{
 border-color: #666;
@@ -31,6 +40,7 @@ border-color: #666;
     margin-right: 5px;
     overflow: hidden;
     white-space: nowrap;
+    cursor:pointer;
 }
 
 .conversation-search{

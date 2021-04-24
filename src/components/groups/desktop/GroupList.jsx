@@ -2,28 +2,30 @@ import React, { useEffect, useState, useContext } from "react";
 import { TextField, Avatar, Badge } from "@material-ui/core";
 import AddCircle from "@material-ui/icons/AddCircle";
 import GroupIcon from "@material-ui/icons/Group";
-import { ConversationContext } from "../../../context/ConversationContext";
-import { ConversationsListContext } from "../../../context/ConversationsListContext";
+import { GroupContext } from "../../../context/GroupContext";
+import { GroupListContext } from "../../../context/GroupListContext";
+import VideocamIcon from "@material-ui/icons/Videocam";
+import { Link } from "react-router-dom";
 import "../../../style/conversation/desktop/conversations.css";
 
-export const Conversations = () => {
+export const GroupList = () => {
   const {
-    conversationDesktop,
-    setConversationDesktop,
+    groupDesktop,
+    setGroupDesktop,
     setOpen,
     setDesktopInitScroll,
-  } = useContext(ConversationContext);
+  } = useContext(GroupContext);
   const {
-    conversationsList,
-    searchConversations,
+    groupList,
+    searchGroup,
     setIsSearching,
     searchingPhrase,
     setSearchingPhrase,
-  } = useContext(ConversationsListContext);
+  } = useContext(GroupListContext);
 
   useEffect(() => {
-    if (!conversationDesktop && conversationsList?.length > 0) {
-      setConversationDesktop(conversationsList[0].conversation);
+    if (!groupDesktop && groupList?.length > 0) {
+      setGroupDesktop(groupList[0].group);
     }
   });
 
@@ -42,7 +44,7 @@ export const Conversations = () => {
             setSearchingPhrase("");
           } else {
             setIsSearching(true);
-            searchConversations(e.target.value);
+            searchGroup(e.target.value);
           }
         }}
         InputProps={{
@@ -59,18 +61,18 @@ export const Conversations = () => {
         }}
       ></TextField>
       <div className="desktop-conversations-container">
-        {conversationsList?.map(
-          ({ notSeenMessages, conversation: element }) => (
+        {groupList?.map(({ notSeenMessages, group: element }) => (
+          <div
+            className={`${
+              groupDesktop?._id === element._id ? "conversation-active" : ""
+            } conversations-item`}
+            key={element._id}
+          >
             <div
-              className={`${
-                conversationDesktop?._id === element._id
-                  ? "conversation-active"
-                  : ""
-              } conversations-item`}
-              key={element._id}
+              className="conversation-item-text-container"
               onClick={() => {
                 setDesktopInitScroll(true);
-                setConversationDesktop(element);
+                setGroupDesktop(element);
               }}
             >
               {notSeenMessages > 0 ? (
@@ -79,7 +81,7 @@ export const Conversations = () => {
                   badgeContent={notSeenMessages}
                   color="primary"
                   anchorOrigin={{
-                    vertical: "center",
+                    vertical: "top",
                     horizontal: "right",
                   }}
                 >
@@ -95,8 +97,19 @@ export const Conversations = () => {
 
               <span className="conversation-item-text">{element.name}</span>
             </div>
-          )
-        )}
+            {/* <Link */}
+            <a
+              className="conversation-video-link"
+              href={`/videoCall/${element._id}`}
+              target="_blank"
+              rel="noreferrer"
+              // to={`/videoCall/${element._id}`}
+            >
+              <VideocamIcon />
+            </a>
+            {/* </Link> */}
+          </div>
+        ))}
       </div>
     </>
   );

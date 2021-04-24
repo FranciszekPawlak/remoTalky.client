@@ -1,24 +1,22 @@
 import { Tooltip } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
 import React, { useEffect, useState, useContext } from "react";
-import { ConversationContext } from "../../context/ConversationContext";
+import { GroupContext } from "../../context/GroupContext";
 import { AuthContext } from "../../context/AuthContext";
 import "../../style/conversation/message.css";
 export const Message = ({ message, type }) => {
   const { user } = useContext(AuthContext);
-  const { conversationMobile, conversationDesktop } = useContext(
-    ConversationContext
-  );
-  const [conversationUsers, setConversationUsers] = useState([]);
-  const seenUsers = conversationUsers.filter(
+  const { groupMobile, groupDesktop } = useContext(GroupContext);
+  const [groupUsers, setGroupUsers] = useState([]);
+  const seenUsers = groupUsers.filter(
     (item) => message.seen.includes(item._id) && message.user._id !== item._id
   );
   const iconsMarkAsSeen = message.seen.filter((item) => item !== user.id);
 
   useEffect(() => {
     type === "mobile"
-      ? setConversationUsers(conversationMobile.users)
-      : setConversationUsers(conversationDesktop.users);
+      ? setGroupUsers(groupMobile.users)
+      : setGroupUsers(groupDesktop.users);
   }, [,]);
 
   return (

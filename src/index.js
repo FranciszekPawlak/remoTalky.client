@@ -5,14 +5,17 @@ import { App } from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import { AuthContextProvider } from "./context/AuthContext";
-import { BrowserRouter as Router } from "react-router-dom";
+import { VideoCallContextProvider } from "./context/VideoCallContext";
+import { BrowserRouter as Router, BrowserHistory } from "react-router-dom";
 
 ReactDOM.render(
   // <React.StrictMode>
   <AuthContextProvider>
-    <Router>
-      <App />
-    </Router>
+    <VideoCallContextProvider>
+      <Router>
+        <App />
+      </Router>
+    </VideoCallContextProvider>
   </AuthContextProvider>,
   // </React.StrictMode>,
   document.getElementById("root")

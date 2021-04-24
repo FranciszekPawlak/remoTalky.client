@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import { Home } from "./components/Home";
-import { Call } from "./components/Call";
 import { Calendar } from "./components/Calendar";
 import { Files } from "./components/Files";
 import { Account } from "./components/Account";
@@ -9,10 +8,13 @@ import { Login } from "./components/Login";
 import { Logout } from "./components/Logout";
 import { AuthContext } from "./context/AuthContext";
 import { createTheme } from "./style/theme";
-import { Conversation } from "./components/conversation";
+import { Groups } from "./components/groups";
 import { ThemeProvider } from "@material-ui/core/styles";
+import { VideoCall } from "./components/groups/VideoCall";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { PrivateRoute } from "./components/PrivateRoute";
+import { VideoCallContext } from "./context/VideoCallContext";
+import { IncommingCall } from "./components/IncommingCall";
 import "./App.css";
 
 export const App = () => {
@@ -23,10 +25,11 @@ export const App = () => {
     <ThemeProvider theme={currentTheme}>
       <CssBaseline />
       <div className="App">
+        <IncommingCall />
         <Switch>
           <PrivateRoute exact path="/" component={Home} />
-          <PrivateRoute path="/chat" component={Conversation} />
-          <PrivateRoute path="/call" component={Call} />
+          <PrivateRoute path="/groups" component={Groups} />
+          <PrivateRoute path="/videoCall/:id" component={VideoCall} />
           <PrivateRoute path="/calendar" component={Calendar} />
           <PrivateRoute path="/files" component={Files} />
           <PrivateRoute path="/account" component={Account} />

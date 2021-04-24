@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { ConversationContext } from "../../context/ConversationContext";
+import { GroupContext } from "../../context/GroupContext";
 import {
   Box,
   Button,
@@ -13,42 +13,33 @@ import {
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { apiCall } from "../../helpers/apiCall";
-import { ConversationsListContext } from "../../context/ConversationsListContext";
+import { GroupListContext } from "../../context/GroupListContext";
 
-export const CreateDialog = () => {
+export const CreateGroup = () => {
   const { url } = useContext(AuthContext);
-  const {
-    open,
-    setOpen,
-
-    setConversationMobile,
-    setConversationDesktop,
-  } = useContext(ConversationContext);
-  const { setConversationsList, conversationsList } = useContext(
-    ConversationsListContext
+  const { open, setOpen, setGroupMobile, setGroupDesktop } = useContext(
+    GroupContext
   );
+  const { setGroupList, groupList } = useContext(GroupListContext);
 
   const [users, setUsers] = useState(null);
   const [name, setName] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
 
-  const createConversation = async () => {
+  const createGroup = async () => {
     const userIds = users?.map((user) => user.id);
     if (!userIds) {
       alert("empty fields");
       return;
     }
-    const { data } = await apiCall(`${url}/conversation/create`, "POST", {
+    const { data } = await apiCall(`${url}/group/create`, "POST", {
       users: userIds,
       name,
     });
     if (data) {
-      setConversationsList([
-        { conversation: data, notSeenMessages: 0 },
-        ...conversationsList,
-      ]);
-      setConversationDesktop(data);
-      setConversationMobile(data);
+      setGroupList([{ group: data, notSeenMessages: 0 }, ...groupList]);
+      setGroupDesktop(data);
+      setGroupMobile(data);
       setOpen(false);
     }
   };
@@ -68,11 +59,9 @@ export const CreateDialog = () => {
 
   return (
     <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
-      <DialogTitle id="form-dialog-title">Create Conversation</DialogTitle>
+      <DialogTitle id="form-dialog-title">Create Group</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Select conversation users. For group conversation create her name
-        </DialogContentText>
+        <DialogContentText>Select group users.</DialogContentText>
         <Box py={1}>
           <Autocomplete
             multiple
@@ -93,8 +82,8 @@ export const CreateDialog = () => {
         </Box>
         <Box py={1}>
           <TextField
-            name="conversation name"
-            label="conversation name"
+            name="group name"
+            label="group name"
             type="text"
             variant="outlined"
             defaultValue=""
@@ -107,7 +96,7 @@ export const CreateDialog = () => {
         <Button onClick={() => setOpen(false)} color="primary">
           Cancel
         </Button>
-        <Button onClick={createConversation} color="primary">
+        <Button onClick={createGroup} color="primary">
           Create
         </Button>
       </DialogActions>

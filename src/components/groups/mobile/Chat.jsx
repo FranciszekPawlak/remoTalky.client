@@ -7,14 +7,12 @@ import { TextField, Snackbar } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import { ConversationContext } from "../../../context/ConversationContext";
+import { GroupContext } from "../../../context/GroupContext";
 import "../../../style/conversation/mobile/messages.css";
 const ENDPOINT = "http://localhost:4001";
 
-export const Messages = () => {
-  const { conversationMobile, setConversationMobile } = useContext(
-    ConversationContext
-  );
+export const Chat = () => {
+  const { groupMobile, setGroupMobile } = useContext(GroupContext);
   const { user } = useContext(AuthContext);
   const [socket, setSocket] = useState(null);
   const [error, setError] = useState(null);
@@ -26,10 +24,10 @@ export const Messages = () => {
   const divRef = useRef(null);
   useEffect(() => {
     const socket = io(ENDPOINT);
-    if (conversationMobile) {
+    if (groupMobile) {
       setSocket(socket);
 
-      socket.emit("joinConversation", user.id, conversationMobile._id);
+      socket.emit("joinGroup", user.id, groupMobile._id);
 
       socket.on("initMessages", (data) => {
         if (data.status === "success") {
@@ -50,7 +48,7 @@ export const Messages = () => {
 
       socket.on("typing", (data) => {
         if (data.status === "on") {
-          const typingUser = conversationMobile.users.find(
+          const typingUser = groupMobile.users.find(
             (item) => item._id === data.user
           );
           setTyping([...typing, typingUser]);
@@ -63,9 +61,9 @@ export const Messages = () => {
       });
     }
     return () => {
-      socket.emit("leaveConversation");
+      socket.emit("leaveGroup");
     };
-  }, [conversationMobile]);
+  }, [groupMobile]);
 
   useEffect(() => {
     if (initScroll) {
@@ -75,7 +73,7 @@ export const Messages = () => {
 
   const addMessage = () => {
     if (message !== "") {
-      socket.emit("message", message, conversationMobile._id, user.id);
+      socket.emit("message", message, groupMobile._id, user.id);
       setMessage("");
     }
   };
@@ -89,21 +87,21 @@ export const Messages = () => {
   };
 
   return (
-    <Dialog fullScreen open={!!conversationMobile} className="mobile-messages">
+    <Dialog fullScreen open={!!groupMobile} className="mobile-messages">
       <div className="mobile-messages-bar">
         <IconButton
           edge="start"
           color="inherit"
           onClick={() => {
             setSeenMessages(false);
-            setConversationMobile(null);
+            setGroupMobile(null);
             setInitScroll(true);
           }}
           aria-label="close"
         >
           <CloseIcon />
         </IconButton>
-        {conversationMobile?.name && <span>{conversationMobile.name}</span>}
+        {groupMobile?.name && <span>{groupMobile.name}</span>}
       </div>
       <div
         className="mobile-messages-content"

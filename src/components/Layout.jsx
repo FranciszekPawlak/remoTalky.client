@@ -2,7 +2,6 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCogs,
-  faVideo,
   faCommentAlt,
   faCalendarAlt,
   faFileAlt,
@@ -16,27 +15,22 @@ export const Layout = ({ children }) => {
       <nav>
         <ul>
           <li>
-            <Link to="chat">
+            <Link to="/groups">
               <FontAwesomeIcon icon={faCommentAlt} />
             </Link>
           </li>
           <li>
-            <Link to="call">
-              <FontAwesomeIcon icon={faVideo} />
-            </Link>
-          </li>
-          <li>
-            <Link to="calendar">
+            <Link to="/calendar">
               <FontAwesomeIcon icon={faCalendarAlt} />
             </Link>
           </li>
           <li>
-            <Link to="files">
+            <Link to="/files">
               <FontAwesomeIcon icon={faFileAlt} />
             </Link>
           </li>
           <li>
-            <Link to="account">
+            <Link to="/account">
               <FontAwesomeIcon icon={faCogs} />
             </Link>
           </li>

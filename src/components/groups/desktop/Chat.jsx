@@ -5,18 +5,15 @@ import { TextField } from "@material-ui/core";
 import { Message } from "../Message";
 import SendIcon from "@material-ui/icons/Send";
 import { Toast } from "../../Toast";
-import { ConversationContext } from "../../../context/ConversationContext";
+import { GroupContext } from "../../../context/GroupContext";
 import "../../../style/conversation/desktop/messages.css";
-
 const ENDPOINT = "http://localhost:4001";
 
-export const Messages = () => {
+export const Chat = () => {
   const { user } = useContext(AuthContext);
-  const {
-    conversationDesktop,
-    desktopInitScroll,
-    setDesktopInitScroll,
-  } = useContext(ConversationContext);
+  const { groupDesktop, desktopInitScroll, setDesktopInitScroll } = useContext(
+    GroupContext
+  );
   const [socket, setSocket] = useState(null);
   const [error, setError] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -27,10 +24,10 @@ export const Messages = () => {
 
   useEffect(() => {
     const socket = io(ENDPOINT);
-    if (conversationDesktop) {
+    if (groupDesktop) {
       setSocket(socket);
 
-      socket.emit("joinConversation", user.id, conversationDesktop._id);
+      socket.emit("joinGroup", user.id, groupDesktop._id);
 
       socket.on("initMessages", (data) => {
         if (data.status === "success") {
@@ -50,7 +47,7 @@ export const Messages = () => {
 
       socket.on("typing", (data) => {
         if (data.status === "on") {
-          const typingUser = conversationDesktop.users.find(
+          const typingUser = groupDesktop.users.find(
             (item) => item._id === data.user
           );
           setTyping([...typing, typingUser]);
@@ -63,9 +60,9 @@ export const Messages = () => {
       });
     }
     return () => {
-      socket.emit("leaveConversation");
+      socket.emit("leaveGroup");
     };
-  }, [conversationDesktop]);
+  }, [groupDesktop]);
 
   useEffect(() => {
     if (desktopInitScroll) {
@@ -73,11 +70,11 @@ export const Messages = () => {
     }
   });
 
-  useEffect(() => setSeenMessages(false), [conversationDesktop]);
+  useEffect(() => setSeenMessages(false), [groupDesktop]);
 
   const addMessage = () => {
     if (message !== "") {
-      socket.emit("message", message, conversationDesktop._id, user.id);
+      socket.emit("message", message, groupDesktop._id, user.id);
       setMessage("");
     }
   };

@@ -2,37 +2,35 @@ import React, { useEffect, useState, useContext } from "react";
 import { TextField, Avatar, Badge } from "@material-ui/core";
 import AddCircle from "@material-ui/icons/AddCircle";
 import GroupIcon from "@material-ui/icons/Group";
-import { ConversationContext } from "../../../context/ConversationContext";
-
-import { ConversationsListContext } from "../../../context/ConversationsListContext";
-
+import { GroupContext } from "../../../context/GroupContext";
+import { GroupListContext } from "../../../context/GroupListContext";
+import VideocamIcon from "@material-ui/icons/Videocam";
+import { Link } from "react-router-dom";
 import "../../../style/conversation/mobile/conversations.css";
 
-export const Conversations = () => {
-  const { conversationMobile, setConversationMobile, setOpen } = useContext(
-    ConversationContext
-  );
+export const GroupList = () => {
+  const { groupMobile, setGroupMobile, setOpen } = useContext(GroupContext);
   const {
-    conversationsList,
-    searchConversations,
+    groupList,
+    searchGroup,
     setIsSearching,
     searchingPhrase,
     setSearchingPhrase,
-  } = useContext(ConversationsListContext);
+  } = useContext(GroupListContext);
 
   return (
     <div className="mobile-conversations-container">
       <div className="mobile-conversations">
-        {conversationsList?.map(
-          ({ notSeenMessages, conversation: element }) => (
+        {groupList?.map(({ notSeenMessages, group: element }) => (
+          <div
+            className={`${
+              groupMobile?._id === element._id ? "conversation-active" : ""
+            } conversations-item`}
+            key={element._id}
+          >
             <div
-              className={`${
-                conversationMobile?._id === element._id
-                  ? "conversation-active"
-                  : ""
-              } conversations-item`}
-              key={element._id}
-              onClick={() => setConversationMobile(element)}
+              className="conversation-item-text-container"
+              onClick={() => setGroupMobile(element)}
             >
               {notSeenMessages > 0 ? (
                 <Badge
@@ -40,7 +38,7 @@ export const Conversations = () => {
                   badgeContent={notSeenMessages}
                   color="primary"
                   anchorOrigin={{
-                    vertical: "center",
+                    vertical: "top",
                     horizontal: "right",
                   }}
                 >
@@ -56,8 +54,19 @@ export const Conversations = () => {
 
               <span className="conversation-item-text">{element.name}</span>
             </div>
-          )
-        )}
+            {/* <Link */}
+            <a
+              className="conversation-video-link"
+              href={`/videoCall/${element._id}`}
+              target="_blank"
+              rel="noreferrer"
+              // to={`/videoCall/${element._id}`}
+            >
+              <VideocamIcon />
+            </a>
+            {/* </Link> */}
+          </div>
+        ))}
       </div>
       <TextField
         className="mobile-conversations-search"
@@ -72,7 +81,7 @@ export const Conversations = () => {
             setSearchingPhrase("");
           } else {
             setIsSearching(true);
-            searchConversations(e.target.value);
+            searchGroup(e.target.value);
           }
         }}
         InputProps={{

@@ -1,0 +1,40 @@
+.peer-container{
+    position: relative;
+    background-color: #262626;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    max-width: 50%;
+}
+
+.peer-container span{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,0);
+    top:10px;
+     color: white; 
+     font-size: 18px;
+     text-shadow: 2px 2px black;
+
+}
+
+.peer-container video{
+    width: 100%;
+    background-color: black;
+}
+
+@media (max-width: 500px){
+    .user-video{
+        width: 10vh;
+    }
+    .video-bar{
+        padding: 4px;
+    }
+    .video-bar div{
+        font-size: 10px;
+    }
+    .video-bar svg{
+        font-size: 20px;
+    }
+}
