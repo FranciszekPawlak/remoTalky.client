@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import "../../style/peerVideo.css";
+import "style/peerVideo.css";
 export const Video = ({ peer }) => {
   const ref = useRef();
   useEffect(() => {
@@ -7,7 +7,6 @@ export const Video = ({ peer }) => {
       ref.current.srcObject = stream;
     });
   }, []);
-  console.log("peeeeeeeeer", peer);
   return (
     <div className="peer-container">
       <span>{peer.peer._id}</span>

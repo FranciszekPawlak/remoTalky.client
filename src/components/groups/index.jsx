@@ -1,11 +1,11 @@
 import React from "react";
-import { Layout } from "../Layout";
+import { Layout } from "components/Layout";
 import { useMediaQuery } from "react-responsive";
-import { CreateGroup } from "./CreateGroup";
-import { GroupContextProvider } from "../../context/GroupContext";
-import { GroupListContextProvider } from "../../context/GroupListContext";
-import { GroupsDesktop } from "./desktop";
-import { GroupsMobile } from "./mobile";
+import { CreateGroup } from "components/groups/CreateGroup";
+import { GroupContextProvider } from "context/GroupContext";
+import { GroupListContextProvider } from "context/GroupListContext";
+import { GroupsDesktop } from "components/groups/chat/desktop";
+import { GroupsMobile } from "components/groups/chat/mobile";
 
 export const Groups = () => {
   const isDesktopOrLaptop = useMediaQuery({ minWidth: 800 });

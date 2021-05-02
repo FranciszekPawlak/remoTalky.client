@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { GroupList } from "./GroupList";
-import { Chat } from "./Chat";
-import { GroupContext } from "../../../context/GroupContext";
-import "../../../style/conversation/desktop/index.css";
+import { GroupList } from "components/groups/chat/desktop/GroupList";
+import { Chat } from "components/groups/chat/desktop/Chat";
+import { GroupContext } from "context/GroupContext";
+import "style/conversation/desktop/index.css";
 
 export const GroupsDesktop = () => {
   const { groupDesktop } = useContext(GroupContext);

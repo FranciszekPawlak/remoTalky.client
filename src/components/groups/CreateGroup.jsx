@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import { GroupContext } from "../../context/GroupContext";
+import { AuthContext } from "context/AuthContext";
+import { GroupContext } from "context/GroupContext";
 import {
   Box,
   Button,
@@ -12,8 +12,8 @@ import {
   Dialog,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { apiCall } from "../../helpers/apiCall";
-import { GroupListContext } from "../../context/GroupListContext";
+import { apiCall } from "helpers/apiCall";
+import { GroupListContext } from "context/GroupListContext";
 
 export const CreateGroup = () => {
   const { url } = useContext(AuthContext);

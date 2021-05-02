@@ -1,17 +1,14 @@
 import { useEffect, useRef, useState, useContext } from "react";
-import { Layout } from "../Layout";
 import Peer from "simple-peer";
-import io from "socket.io-client";
-import { useParams, useHistory } from "react-router-dom";
-import { Video } from "./Video";
+import { useParams } from "react-router-dom";
 import CallEndIcon from "@material-ui/icons/CallEnd";
 import CallIcon from "@material-ui/icons/Call";
 import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
-import { VideoCallContext } from "../../context/VideoCallContext";
-import { AuthContext } from "../../context/AuthContext";
-import "../../style/video.css";
-const url = "http://localhost:4002";
+import { VideoCallContext } from "context/VideoCallContext";
+import { AuthContext } from "context/AuthContext";
+import { Video } from "components/groups/videoCall/Video";
+import "style/video.css";
 
 export const VideoCall = () => {
   const { socket, setIncommingCall } = useContext(VideoCallContext);
@@ -23,7 +20,6 @@ export const VideoCall = () => {
   const peersRef = useRef([]);
   const { id } = useParams();
   const groupId = id;
-  const history = useHistory();
 
   useEffect(() => {
     setIncommingCall(null);
@@ -40,7 +36,6 @@ export const VideoCall = () => {
 
         socket.current.on("all users", (callUSers) => {
           const peersToSet = [];
-          console.log("users from api", callUSers);
           callUSers.forEach((userInGroup) => {
             const peer = createPeer(
               userInGroup.socketId,
@@ -48,14 +43,12 @@ export const VideoCall = () => {
               stream,
               userInGroup.username
             );
-            console.log("add create - before set state peers", peer);
             peersRef.current.push({
               peerID: userInGroup.socketId,
               peer,
             });
             peersToSet.push({ socketId: userInGroup.socketId, peer });
           });
-          console.log("add create - peersToSet", peersToSet);
           setPeers(peersToSet);
         });
 
@@ -71,10 +64,10 @@ export const VideoCall = () => {
             peerID: payload.callerID,
             peer,
           });
-          setPeers((prevPeers) => {
-            console.log("prevp", prevPeers);
-            return [...prevPeers, { socketId: payload.callerID, peer }];
-          });
+          setPeers((prevPeers) => [
+            ...prevPeers,
+            { socketId: payload.callerID, peer },
+          ]);
         });
 
         socket.current.on("receiving returned signal", (payload) => {
@@ -87,9 +80,6 @@ export const VideoCall = () => {
       .catch((error) => console.log(error));
 
     socket.current.on("user left", (socketId) => {
-      console.log(socketId);
-      console.log(peersRef.current);
-      peers.forEach((x) => console.log("xxx ", x, " xxx"));
       setPeers((prevPeers) =>
         prevPeers.filter((item) => item.socketId !== socketId)
       );
@@ -150,10 +140,6 @@ export const VideoCall = () => {
   const callAllUsersInGroup = () =>
     socket.current.emit("call users", groupId, user.id);
 
-  useEffect(() => {
-    console.log(peers);
-  }, [peers]);
-
   return (
     <div className="video-container">
       <div className="video-peers">
@@ -170,7 +156,6 @@ export const VideoCall = () => {
         <div
           onClick={() => {
             socket.current.emit("leave call", user.id);
-            // history.goBack();
             window.close();
           }}
         >

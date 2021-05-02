@@ -1,9 +1,9 @@
 import { Tooltip } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
 import React, { useEffect, useState, useContext } from "react";
-import { GroupContext } from "../../context/GroupContext";
-import { AuthContext } from "../../context/AuthContext";
-import "../../style/conversation/message.css";
+import { GroupContext } from "context/GroupContext";
+import { AuthContext } from "context/AuthContext";
+import "style/conversation/message.css";
 export const Message = ({ message, type }) => {
   const { user } = useContext(AuthContext);
   const { groupMobile, groupDesktop } = useContext(GroupContext);

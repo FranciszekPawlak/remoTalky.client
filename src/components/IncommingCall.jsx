@@ -1,24 +1,14 @@
 import React, { useContext } from "react";
-
-import {
-  Button,
-  DialogTitle,
-  DialogContentText,
-  DialogContent,
-  DialogActions,
-  Dialog,
-} from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { Button, DialogTitle, DialogActions, Dialog } from "@material-ui/core";
 import { VideoCallContext } from "../context/VideoCallContext";
 import CallEndIcon from "@material-ui/icons/CallEnd";
 import CallIcon from "@material-ui/icons/Call";
 
 export const IncommingCall = () => {
-  const history = useHistory();
   const { incommingCall, setIncommingCall } = useContext(VideoCallContext);
   return (
     <Dialog
-      open={incommingCall !== null}
+      open={!!incommingCall}
       onClose={() => setIncommingCall(null)}
       fullWidth
     >
@@ -29,6 +19,11 @@ export const IncommingCall = () => {
         <Button
           target="_blank"
           href={`/VideoCall/${incommingCall?._id}`}
+          onClick={() =>
+            setTimeout(() => {
+              setIncommingCall(null);
+            }, 1000)
+          }
           color="primary"
         >
           <CallIcon />

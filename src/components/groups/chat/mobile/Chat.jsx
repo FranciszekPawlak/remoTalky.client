@@ -1,14 +1,14 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import io from "socket.io-client";
-import { AuthContext } from "../../../context/AuthContext";
-import { Message } from "../Message";
-import { TextField, Snackbar } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import { GroupContext } from "../../../context/GroupContext";
-import "../../../style/conversation/mobile/messages.css";
+import { GroupContext } from "context/GroupContext";
+import { AuthContext } from "context/AuthContext";
+import { Message } from "components/groups/chat/Message";
+import "style/conversation/mobile/messages.css";
 const ENDPOINT = "http://localhost:4001";
 
 export const Chat = () => {

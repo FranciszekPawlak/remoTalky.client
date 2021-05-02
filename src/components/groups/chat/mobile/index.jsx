@@ -1,6 +1,6 @@
 import React from "react";
-import { GroupList } from "./GroupList";
-import { Chat } from "./Chat";
+import { GroupList } from "components/groups/chat/mobile/GroupList";
+import { Chat } from "components/groups/chat/mobile/Chat";
 export const GroupsMobile = () => {
   return (
     <>
