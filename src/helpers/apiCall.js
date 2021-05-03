@@ -23,3 +23,27 @@ export const swrCall = async (url) => {
   });
   return res.data;
 };
+
+export const apiDownload = async (url, data) => {
+  const res = await axios({
+    url: url,
+    method: "POST",
+    data: data,
+    withCredentials: true,
+    responseType: "blob",
+  });
+  return res;
+};
+
+export const uploadFile = async (url, data) => {
+  const res = await axios({
+    url: url,
+    method: "POST",
+    headers: {
+      "Contetnt-Type": "multipart/form-data",
+    },
+    data: data,
+    withCredentials: true,
+  });
+  return res;
+};
