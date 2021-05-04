@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { apiCall } from "../helpers/apiCall";
-import { AuthContext } from "../context/AuthContext";
+import { authCall } from "helpers/apiCall";
+import { AuthContext } from "context/AuthContext";
 import {
   Button,
   TextField,
@@ -30,7 +30,7 @@ export const CreateAccount = () => {
   const addUser = async ({ email, username, password }) => {
     setLoading(true);
     try {
-      const res = await apiCall(`${url}/register`, "POST", {
+      const res = await authCall(`${url}/register`, "POST", {
         email,
         username,
         password,

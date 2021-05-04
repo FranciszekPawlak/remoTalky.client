@@ -8,15 +8,12 @@ import {
   Dialog,
 } from "@material-ui/core";
 import { toast } from "react-toastify";
-import { apiCall } from "helpers/apiCall";
+import { callApi } from "helpers/apiCall";
 import { EventInTable } from "components/calendar/EventInTable";
-import "style/calendarForm.css";
+import "style/calendar/calendarForm.css";
 import { CalendarContext } from "context/CalendarContext";
 
 export const ShowEvent = () => {
-  const { url, user } = useContext(AuthContext);
-  const [event, setEvent] = useState(null);
-  const [confirmDialog, setConfirmDialog] = useState(false);
   const {
     setEvents,
     setEditOpen,
@@ -25,40 +22,33 @@ export const ShowEvent = () => {
     detailsOpen,
     setDetailsOpen,
   } = useContext(CalendarContext);
-
-  const getEvent = async (id) => {
-    try {
-      const res = await apiCall(`${url}/event/get/${id}`, "GET");
-      if (res.data) {
-        setEvent(res.data);
-      }
-    } catch (err) {
-      toast.error(err?.response?.statusText);
-    }
-  };
-  const deleteEvent = async () => {
-    if (!event?._id || user?.id !== event?.creator?._id) {
-      return;
-    }
-    try {
-      const res = await apiCall(`${url}/event/delete/${event._id}`, "DELETE");
-      if (res.data) {
-        setEvents((prev) => prev.filter((item) => item._id !== event._id));
-        setSelectedEvent(null);
-        toast.success("Success");
-        setConfirmDialog(false);
-        setDetailsOpen(false);
-      }
-    } catch (err) {
-      toast.error(err?.response?.statusText);
-    }
-  };
+  const { url, user } = useContext(AuthContext);
+  const [event, setEvent] = useState(null);
+  const [confirmDialog, setConfirmDialog] = useState(false);
 
   useEffect(() => {
     if (selectedEvent) {
       getEvent(selectedEvent);
     }
   }, [selectedEvent, detailsOpen]);
+
+  const getEvent = async (id) =>
+    callApi(`${url}/event/get/${id}`, "GET", setEvent);
+
+  const deleteEvent = async () => {
+    if (!event?._id || user?.id !== event?.creator?._id) {
+      return;
+    }
+    callApi(`${url}/event/delete/${event._id}`, "DELETE", deleteCallback);
+  };
+
+  const deleteCallback = () => {
+    setEvents((prev) => prev.filter((item) => item._id !== event._id));
+    setSelectedEvent(null);
+    toast.success("Success");
+    setConfirmDialog(false);
+    setDetailsOpen(false);
+  };
 
   return (
     <>

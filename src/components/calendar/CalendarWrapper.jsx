@@ -7,7 +7,7 @@ import { CreateEvent } from "components/calendar/Create";
 import { ShowEvent } from "components/calendar/Show";
 import { EditEvent } from "components/calendar/Edit";
 import { CalendarContext } from "context/CalendarContext";
-import "style/calendar.css";
+import "style/calendar/calendar.css";
 
 export const CalendarWrapper = () => {
   const {

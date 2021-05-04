@@ -1,37 +1,21 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { AuthContext } from "context/AuthContext";
 import { useForm } from "react-hook-form";
 import {
-  Box,
   Button,
-  TextField,
   DialogTitle,
-  DialogContentText,
   DialogContent,
   DialogActions,
   Dialog,
-  Checkbox,
-  FormControlLabel,
 } from "@material-ui/core";
 import { toast } from "react-toastify";
-import Alert from "@material-ui/lab/Alert";
-import { MultiSelect } from "components/MultiSelect";
-import { apiCall } from "helpers/apiCall";
-import format from "date-fns/format";
-import { Select } from "components/Select";
-import { Input } from "components/Input";
-import "style/calendarForm.css";
+import { MultiSelect } from "components/formComponents/MultiSelect";
+import { callApi } from "helpers/apiCall";
+import { Select } from "components/formComponents/Select";
+import { Input } from "components/formComponents/Input";
+import "style/calendar/calendarForm.css";
 import { CalendarContext } from "context/CalendarContext";
-
-const now = format(Date.now(), "yyyy-MM-dd'T'k:mm");
-const defaultEvent = {
-  title: "",
-  start: now,
-  end: "",
-  description: "",
-  groupId: "",
-  users: [],
-};
+import { formDefaultValues } from "components/calendar/formDefaultValues";
 
 export const CreateEvent = () => {
   const {
@@ -41,42 +25,30 @@ export const CreateEvent = () => {
     groups,
     usersList,
   } = useContext(CalendarContext);
-  const { url, user } = useContext(AuthContext);
+  const { url } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   const { handleSubmit, errors, register, control, setValue } = useForm({
-    // mode: "all",
-    // shouldUnregister: false,
-    defaultValues: defaultEvent,
+    defaultValues: formDefaultValues,
   });
 
-  const addEvent = async ({
-    title,
-    description,
-    start,
-    end,
-    groupId,
-    users,
-  }) => {
-    setLoading(true);
-    try {
-      const res = await apiCall(`${url}/event/create`, "POST", {
-        title,
-        description,
-        start: new Date(start).toISOString(),
-        end: end ? new Date(end).toISOString() : null,
-        group: groupId ? groupId : null,
-        users: users ? users.map((item) => item.id) : [],
-      });
+  const addCallback = (data) => {
+    setEvents((prev) => [...prev, data]);
+    setCreateOpen(false);
+    toast.success("Success");
+  };
 
-      if (res.data) {
-        setEvents((prev) => [...prev, res.data]);
-        setCreateOpen(false);
-        toast.success("Success");
-      }
-    } catch (err) {
-      toast.error(err?.response?.statusText);
-    }
+  const addEvent = ({ title, description, start, end, groupId, users }) => {
+    setLoading(true);
+    callApi(`${url}/event/create`, "POST", addCallback, {
+      title,
+      description,
+      start: new Date(start).toISOString(),
+      end: end ? new Date(end).toISOString() : null,
+      group: groupId ? groupId : null,
+      users: users ? users.map((item) => item.id) : [],
+    });
+
     setLoading(false);
   };
 

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { Layout } from "./Layout";
+import { Layout } from "components/Layout";
 import { useHistory } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -11,8 +11,8 @@ import {
   Typography,
   FormControlLabel,
 } from "@material-ui/core";
-import { CreateAccount } from "./CreateAccount";
-import { ResetPassword } from "./ResetPassword";
+import { CreateAccount } from "components/account/CreateAccount";
+import { ResetPassword } from "components/account/ResetPassword";
 
 export const Account = () => {
   const history = useHistory();

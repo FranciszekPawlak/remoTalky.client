@@ -1,5 +1,5 @@
 import format from "date-fns/format";
-import "style/eventInTable.css";
+import "style/calendar/eventInTable.css";
 import VideocamIcon from "@material-ui/icons/Videocam";
 
 export const EventInTable = ({ event }) => {

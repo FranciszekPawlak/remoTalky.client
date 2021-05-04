@@ -2,7 +2,7 @@ import { useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
 import * as Cookies from "js-cookie";
-import { apiCall } from "../helpers/apiCall";
+import { authCall } from "../helpers/apiCall";
 
 export const useAuth = () => {
   const history = useHistory();
@@ -10,7 +10,7 @@ export const useAuth = () => {
 
   const checkToken = async () => {
     try {
-      const res = await apiCall(`${url}/checkRole`, "GET");
+      const res = await authCall(`${url}/checkRole`, "GET");
       const { status, data } = res;
       if (status === 200 && data.username && data.role) {
         setUser(data);

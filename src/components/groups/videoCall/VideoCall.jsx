@@ -8,7 +8,7 @@ import MicOffIcon from "@material-ui/icons/MicOff";
 import { VideoCallContext } from "context/VideoCallContext";
 import { AuthContext } from "context/AuthContext";
 import { Video } from "components/groups/videoCall/Video";
-import "style/video.css";
+import "style/groups/video.css";
 
 export const VideoCall = () => {
   const { socket, setIncommingCall } = useContext(VideoCallContext);

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { apiCall } from "../helpers/apiCall";
-import { AuthContext } from "../context/AuthContext";
+import { authCall } from "helpers/apiCall";
+import { AuthContext } from "context/AuthContext";
 import { Button, TextField, Box, Typography } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { useForm } from "react-hook-form";
@@ -20,7 +20,7 @@ export const ResetPassword = () => {
   const resetPassword = async ({ oldPassword, newPassword }) => {
     setLoading(true);
     try {
-      const res = await apiCall(`${url}/resetPassword`, "POST", {
+      const res = await authCall(`${url}/resetPassword`, "POST", {
         oldPassword,
         newPassword,
       });

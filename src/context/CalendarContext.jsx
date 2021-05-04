@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { swrCall } from "../helpers/apiCall";
+import { swrCall, callApi } from "helpers/apiCall";
 import useSWR from "swr";
-import { apiCall } from "helpers/apiCall";
 import { AuthContext } from "context/AuthContext";
 export const CalendarContext = createContext();
 
@@ -16,32 +15,13 @@ export const CalendarContextProvider = ({ children }) => {
   const [groups, setGroups] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
-  const { data } = useSWR(`${API_URL}/event/list`, swrCall, {
+  useSWR(`${API_URL}/event/list`, swrCall, {
     onSuccess: (e) => setEvents(e),
     refreshInterval: 10000,
   });
 
-  const getUsers = async () => {
-    try {
-      const res = await apiCall(`${API_URL}/users`, "GET");
-      if (res.data) {
-        setUsersList(res.data);
-      }
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
-
-  const getGroups = async () => {
-    try {
-      const res = await apiCall(`${API_URL}/group/getList`, "GET");
-      if (res.data) {
-        setGroups(res.data);
-      }
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
+  const getUsers = () => callApi(`${API_URL}/users`, "GET", setUsersList);
+  const getGroups = () => callApi(`${API_URL}/group/getList`, "GET", setGroups);
 
   useEffect(() => {
     getUsers();

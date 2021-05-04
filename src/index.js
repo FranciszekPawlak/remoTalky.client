@@ -6,7 +6,7 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import { AuthContextProvider } from "./context/AuthContext";
 import { VideoCallContextProvider } from "./context/VideoCallContext";
-import { BrowserRouter as Router, BrowserHistory } from "react-router-dom";
+import { HashRouter as Router, BrowserHistory } from "react-router-dom";
 
 ReactDOM.render(
   // <React.StrictMode>

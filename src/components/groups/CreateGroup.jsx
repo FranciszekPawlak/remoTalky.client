@@ -12,7 +12,7 @@ import {
   Dialog,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { apiCall } from "helpers/apiCall";
+import { callApi } from "helpers/apiCall";
 import { GroupListContext } from "context/GroupListContext";
 
 export const CreateGroup = () => {
@@ -21,41 +21,33 @@ export const CreateGroup = () => {
     GroupContext
   );
   const { setGroupList, groupList } = useContext(GroupListContext);
-
   const [users, setUsers] = useState(null);
   const [name, setName] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
-
-  const createGroup = async () => {
-    const userIds = users?.map((user) => user.id);
-    if (!userIds) {
-      alert("empty fields");
-      return;
-    }
-    const { data } = await apiCall(`${url}/group/create`, "POST", {
-      users: userIds,
-      name,
-    });
-    if (data) {
-      setGroupList([{ group: data, notSeenMessages: 0 }, ...groupList]);
-      setGroupDesktop(data);
-      setGroupMobile(data);
-      setOpen(false);
-    }
-  };
-  const getAllUsers = async () => {
-    try {
-      const res = await apiCall(`${url}/users`, "GET");
-      setAllUsers(res.data);
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
 
   useEffect(() => {
     getAllUsers();
     return setUsers([]);
   }, [,]);
+
+  const createGroup = async () => {
+    const userIds = users?.map((user) => user.id);
+    if (!userIds) {
+      return;
+    }
+    callApi(`${url}/group/create`, "POST", createCallback, {
+      users: userIds,
+      name,
+    });
+  };
+  const getAllUsers = () => callApi(`${url}/users`, "GET", setAllUsers);
+
+  const createCallback = (data) => {
+    setGroupList([{ group: data, notSeenMessages: 0 }, ...groupList]);
+    setGroupDesktop(data);
+    setGroupMobile(data);
+    setOpen(false);
+  };
 
   return (
     <Dialog open={open} onClose={() => setOpen(false)} fullWidth>

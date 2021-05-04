@@ -4,8 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHamburger } from "@fortawesome/free-solid-svg-icons";
 import * as Cookies from "js-cookie";
-import { apiCall } from "../helpers/apiCall";
-
+import { authCall } from "../helpers/apiCall";
 import "../style/logout.css";
 
 export const Logout = () => {
@@ -13,7 +12,7 @@ export const Logout = () => {
   const { url, setUser } = useContext(AuthContext);
 
   const logout = () => {
-    apiCall(`${url}/logout`, "GET");
+    authCall(`${url}/logout`, "GET");
     setUser(null);
     Cookies.remove("user");
     history.push("/login");

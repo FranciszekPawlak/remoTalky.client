@@ -8,25 +8,15 @@ import {
   DialogActions,
   Dialog,
 } from "@material-ui/core";
-import { MultiSelect } from "components/MultiSelect";
-import { apiCall } from "helpers/apiCall";
+import { MultiSelect } from "components/formComponents/MultiSelect";
+import { callApi } from "helpers/apiCall";
 import format from "date-fns/format";
-import { add, parseISO } from "date-fns/esm";
-import { Select } from "components/Select";
-import { Input } from "components/Input";
+import { Select } from "components/formComponents/Select";
+import { Input } from "components/formComponents/Input";
 import { toast } from "react-toastify";
-import "style/calendarForm.css";
+import "style/calendar/calendarForm.css";
 import { CalendarContext } from "context/CalendarContext";
-
-const now = format(Date.now(), "yyyy-MM-dd'T'k:mm");
-const defaultEvent = {
-  title: "",
-  start: now,
-  end: "",
-  description: "",
-  groupId: "",
-  users: [],
-};
+import { formDefaultValues } from "components/calendar/formDefaultValues";
 
 export const EditEvent = () => {
   const {
@@ -43,26 +33,8 @@ export const EditEvent = () => {
   const [loading, setLoading] = useState(false);
 
   const { handleSubmit, errors, register, control, setValue } = useForm({
-    defaultValues: defaultEvent,
+    defaultValues: formDefaultValues,
   });
-
-  const getEvent = async (id) => {
-    try {
-      const res = await apiCall(`${url}/event/get/${id}`, "GET");
-      if (res.data) {
-        console.log(res.data);
-        const { title, description, start, end, users, group } = res.data;
-        setValue("title", title, { shouldDirty: true, shouldValidate: true });
-        setValue("description", description);
-        setValue("start", format(new Date(start), "yyyy-MM-dd'T'k:mm"));
-        setValue("end", end ? format(new Date(end), "yyyy-MM-dd'T'k:mm") : "");
-        setValue("users", users ? users : []);
-        setValue("groupId", group ? group._id : "");
-      }
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
 
   useEffect(() => {
     if (selectedEvent) {
@@ -70,39 +42,55 @@ export const EditEvent = () => {
     }
   }, [selectedEvent, editOpen]);
 
+  const getEvent = async (id) =>
+    callApi(`${url}/event/get/${id}`, "GET", getEventCallBack);
+
   const editEvent = async (props) => {
     const { title, description, start, end, groupId, users } = props;
     setLoading(true);
 
-    try {
-      const res = await apiCall(`${url}/event/edit`, "POST", {
-        id: selectedEvent,
-        title,
-        description,
-        start: new Date(start).toISOString(),
-        end: end ? new Date(end).toISOString() : null,
-        group: groupId ? groupId : null,
-        users: users ? users.map((item) => item._id) : [],
-      });
+    callApi(`${url}/event/edit`, "POST", editEventCallBack, {
+      id: selectedEvent,
+      title,
+      description,
+      start: new Date(start).toISOString(),
+      end: end ? new Date(end).toISOString() : null,
+      group: groupId ? groupId : null,
+      users: users ? users.map((item) => item._id) : [],
+    });
 
-      if (res.data) {
-        setEvents((prev) =>
-          prev.map((item) => {
-            if (item._id === res.data._id) {
-              item = res.data;
-            }
-            return item;
-          })
-        );
-        setSelectedEvent(null);
-        setEditOpen(false);
-        setDetailsOpen(false);
-        toast.success("Success");
-      }
-    } catch (err) {
-      toast.error(err?.response?.statusText);
-    }
     setLoading(false);
+  };
+
+  const getEventCallBack = ({
+    title,
+    description,
+    start,
+    end,
+    users,
+    group,
+  }) => {
+    setValue("title", title, { shouldDirty: true, shouldValidate: true });
+    setValue("description", description);
+    setValue("start", format(new Date(start), "yyyy-MM-dd'T'k:mm"));
+    setValue("end", end ? format(new Date(end), "yyyy-MM-dd'T'k:mm") : "");
+    setValue("users", users ? users : []);
+    setValue("groupId", group ? group._id : "");
+  };
+
+  const editEventCallBack = (data) => {
+    setEvents((prev) =>
+      prev.map((item) => {
+        if (item._id === data._id) {
+          item = data;
+        }
+        return item;
+      })
+    );
+    setSelectedEvent(null);
+    setEditOpen(false);
+    setDetailsOpen(false);
+    toast.success("Success");
   };
 
   return (

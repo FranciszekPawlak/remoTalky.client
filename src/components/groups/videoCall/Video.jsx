@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import "style/peerVideo.css";
+import "style/groups/peerVideo.css";
 export const Video = ({ peer }) => {
   const ref = useRef();
   useEffect(() => {

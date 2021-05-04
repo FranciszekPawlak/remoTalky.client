@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import { Button, Typography } from "@material-ui/core";
 import { AuthContext } from "../context/AuthContext";
 import * as Cookies from "js-cookie";
-import { apiCall } from "../helpers/apiCall";
+import { authCall } from "../helpers/apiCall";
 import Alert from "@material-ui/lab/Alert";
 import { useForm, Controller } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,7 +29,7 @@ export const Login = () => {
       return setMessage("Incorrect email or password");
     }
     try {
-      const res = await apiCall(`${url}/login`, "POST", { email, password });
+      const res = await authCall(`${url}/login`, "POST", { email, password });
 
       const { status, data } = res;
       if (status === 200 && data.username && data.role) {
