@@ -5,11 +5,10 @@ import useSWR from "swr";
 export const GroupListContext = createContext();
 
 export const GroupListContextProvider = ({ children }) => {
-  const API_URL = "http://localhost:4000";
   const [groupList, setGroupList] = useState([]);
   const [searchingPhrase, setSearchingPhrase] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const { data } = useSWR(`${API_URL}/group/getListWithNotification`, swrCall, {
+  const { data } = useSWR(`/group/getListWithNotification`, swrCall, {
     onSuccess: (e) => (isSearching ? null : setGroupList(e)),
     refreshInterval: 5000,
   });

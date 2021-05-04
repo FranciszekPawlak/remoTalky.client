@@ -9,7 +9,7 @@ import { GroupContext } from "context/GroupContext";
 import { AuthContext } from "context/AuthContext";
 import { Message } from "components/groups/chat/Message";
 import "style/conversation/mobile/messages.css";
-const ENDPOINT = "http://localhost:4001";
+import { config } from "config";
 
 export const Chat = () => {
   const { groupMobile, setGroupMobile } = useContext(GroupContext);
@@ -23,7 +23,7 @@ export const Chat = () => {
   const [initScroll, setInitScroll] = useState(true);
   const divRef = useRef(null);
   useEffect(() => {
-    const socket = io(ENDPOINT);
+    const socket = io(config.chatSocektUrl);
     if (groupMobile) {
       setSocket(socket);
 

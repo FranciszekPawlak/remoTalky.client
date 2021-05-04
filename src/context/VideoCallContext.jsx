@@ -7,11 +7,11 @@ import React, {
 } from "react";
 import { AuthContext } from "./AuthContext";
 import io from "socket.io-client";
+import { config } from "config";
 
 export const VideoCallContext = createContext();
 
 export const VideoCallContextProvider = ({ children }) => {
-  const ENDPOINT = "http://localhost:4002";
   const { user } = useContext(AuthContext);
   const [isConnectionSet, setIsConnectionSet] = useState(false);
   const [incommingCall, setIncommingCall] = useState(null);
@@ -19,7 +19,7 @@ export const VideoCallContextProvider = ({ children }) => {
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io(ENDPOINT);
+    socket.current = io(config.videoSocketUlr);
     socket.current.on("incomming call", (group) => {
       setIncommingCall(group);
     });

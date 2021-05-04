@@ -7,7 +7,7 @@ import SendIcon from "@material-ui/icons/Send";
 import { Toast } from "components/Toast";
 import { GroupContext } from "context/GroupContext";
 import "style/conversation/desktop/messages.css";
-const ENDPOINT = "http://localhost:4001";
+import { config } from "config";
 
 export const Chat = () => {
   const { user } = useContext(AuthContext);
@@ -23,7 +23,7 @@ export const Chat = () => {
   const divRef = useRef(null);
 
   useEffect(() => {
-    const socket = io(ENDPOINT);
+    const socket = io(config.chatSocektUrl);
     if (groupDesktop) {
       setSocket(socket);
 

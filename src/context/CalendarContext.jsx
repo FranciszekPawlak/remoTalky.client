@@ -5,8 +5,6 @@ import { AuthContext } from "context/AuthContext";
 export const CalendarContext = createContext();
 
 export const CalendarContextProvider = ({ children }) => {
-  const API_URL = "http://localhost:4000";
-  const { user } = useContext(AuthContext);
   const [events, setEvents] = useState([]);
   const [editOpen, setEditOpen] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
@@ -15,13 +13,13 @@ export const CalendarContextProvider = ({ children }) => {
   const [groups, setGroups] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
-  useSWR(`${API_URL}/event/list`, swrCall, {
+  useSWR(`/event/list`, swrCall, {
     onSuccess: (e) => setEvents(e),
     refreshInterval: 10000,
   });
 
-  const getUsers = () => callApi(`${API_URL}/users`, "GET", setUsersList);
-  const getGroups = () => callApi(`${API_URL}/group/getList`, "GET", setGroups);
+  const getUsers = () => callApi(`/users`, "GET", setUsersList);
+  const getGroups = () => callApi(`/group/getList`, "GET", setGroups);
 
   useEffect(() => {
     getUsers();

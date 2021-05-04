@@ -6,11 +6,11 @@ import { authCall } from "../helpers/apiCall";
 
 export const useAuth = () => {
   const history = useHistory();
-  const { url, user, setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   const checkToken = async () => {
     try {
-      const res = await authCall(`${url}/checkRole`, "GET");
+      const res = await authCall(`/checkRole`, "GET");
       const { status, data } = res;
       if (status === 200 && data.username && data.role) {
         setUser(data);

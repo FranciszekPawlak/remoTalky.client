@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { downloadBlob } from "helpers/downloadBlob";
+import { config } from "config";
 
 export const callApi = async (
   url,
@@ -14,7 +15,7 @@ export const callApi = async (
   try {
     const res = await axios({
       method: method,
-      url: url,
+      url: `${config.apiUrl}${url}`,
       headers: headers,
       data: body,
       withCredentials: true,
@@ -33,7 +34,7 @@ export const callApi = async (
 export const authCall = async (url, method = "GET", body = null) => {
   const res = await axios({
     method: method,
-    url: url,
+    url: `${config.apiUrl}${url}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -45,7 +46,7 @@ export const authCall = async (url, method = "GET", body = null) => {
 
 export const swrCall = async (url) => {
   const res = await axios({
-    url: url,
+    url: `${config.apiUrl}${url}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -57,7 +58,7 @@ export const swrCall = async (url) => {
 export const apiDownload = async (url, data) => {
   try {
     const res = await axios({
-      url: url,
+      url: `${config.apiUrl}${url}`,
       method: "POST",
       data: data,
       withCredentials: true,
