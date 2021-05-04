@@ -43,13 +43,13 @@ export const EditEvent = () => {
   }, [selectedEvent, editOpen]);
 
   const getEvent = async (id) =>
-    callApi(`${url}/event/get/${id}`, "GET", getEventCallBack);
+    callApi(`/event/get/${id}`, "GET", getEventCallBack);
 
   const editEvent = async (props) => {
     const { title, description, start, end, groupId, users } = props;
     setLoading(true);
 
-    callApi(`${url}/event/edit`, "POST", editEventCallBack, {
+    callApi(`/event/edit`, "POST", editEventCallBack, {
       id: selectedEvent,
       title,
       description,

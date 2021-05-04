@@ -30,7 +30,7 @@ export const CreateAccount = () => {
   const addUser = async ({ email, username, password }) => {
     setLoading(true);
     try {
-      const res = await authCall(`${url}/register`, "POST", {
+      const res = await authCall(`/register`, "POST", {
         email,
         username,
         password,

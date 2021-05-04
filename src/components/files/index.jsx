@@ -19,24 +19,23 @@ export const Files = () => {
 
   const itemsInTable = 10;
 
-  useSWR(`${url}/file/list`, swrCall, {
+  useSWR(`/file/list`, swrCall, {
     onSuccess: (e) => setFiles(e),
     refreshInterval: 10000,
   });
 
   const deleteFiles = () =>
-    callApi(`${url}/file/delete`, "POST", deleteCallback, {
+    callApi(`/file/delete`, "POST", deleteCallback, {
       ids: selection,
     });
 
-  const downloadFiles = () =>
-    apiDownload(`${url}/file/download`, { ids: selection });
+  const downloadFiles = () => apiDownload(`/file/download`, { ids: selection });
 
   const upload = () => {
     const data = new FormData();
     data.append("file", fileRef.current.files[0]);
 
-    callApi(`${url}/file/upload`, "POST", uploadCallback, data, {
+    callApi(`/file/upload`, "POST", uploadCallback, data, {
       "Contetnt-Type": "multipart/form-data",
     });
   };

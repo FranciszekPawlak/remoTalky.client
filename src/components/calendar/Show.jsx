@@ -22,7 +22,7 @@ export const ShowEvent = () => {
     detailsOpen,
     setDetailsOpen,
   } = useContext(CalendarContext);
-  const { url, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [event, setEvent] = useState(null);
   const [confirmDialog, setConfirmDialog] = useState(false);
 
@@ -32,14 +32,13 @@ export const ShowEvent = () => {
     }
   }, [selectedEvent, detailsOpen]);
 
-  const getEvent = async (id) =>
-    callApi(`${url}/event/get/${id}`, "GET", setEvent);
+  const getEvent = async (id) => callApi(`/event/get/${id}`, "GET", setEvent);
 
   const deleteEvent = async () => {
     if (!event?._id || user?.id !== event?.creator?._id) {
       return;
     }
-    callApi(`${url}/event/delete/${event._id}`, "DELETE", deleteCallback);
+    callApi(`/event/delete/${event._id}`, "DELETE", deleteCallback);
   };
 
   const deleteCallback = () => {

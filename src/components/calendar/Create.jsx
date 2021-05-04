@@ -40,7 +40,7 @@ export const CreateEvent = () => {
 
   const addEvent = ({ title, description, start, end, groupId, users }) => {
     setLoading(true);
-    callApi(`${url}/event/create`, "POST", addCallback, {
+    callApi(`/event/create`, "POST", addCallback, {
       title,
       description,
       start: new Date(start).toISOString(),

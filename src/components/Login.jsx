@@ -29,7 +29,7 @@ export const Login = () => {
       return setMessage("Incorrect email or password");
     }
     try {
-      const res = await authCall(`${url}/login`, "POST", { email, password });
+      const res = await authCall(`/login`, "POST", { email, password });
 
       const { status, data } = res;
       if (status === 200 && data.username && data.role) {

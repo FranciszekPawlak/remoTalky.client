@@ -35,12 +35,12 @@ export const CreateGroup = () => {
     if (!userIds) {
       return;
     }
-    callApi(`${url}/group/create`, "POST", createCallback, {
+    callApi(`/group/create`, "POST", createCallback, {
       users: userIds,
       name,
     });
   };
-  const getAllUsers = () => callApi(`${url}/users`, "GET", setAllUsers);
+  const getAllUsers = () => callApi(`/users`, "GET", setAllUsers);
 
   const createCallback = (data) => {
     setGroupList([{ group: data, notSeenMessages: 0 }, ...groupList]);

@@ -20,7 +20,7 @@ export const ResetPassword = () => {
   const resetPassword = async ({ oldPassword, newPassword }) => {
     setLoading(true);
     try {
-      const res = await authCall(`${url}/resetPassword`, "POST", {
+      const res = await authCall(`resetPassword`, "POST", {
         oldPassword,
         newPassword,
       });

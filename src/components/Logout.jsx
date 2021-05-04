@@ -12,7 +12,7 @@ export const Logout = () => {
   const { url, setUser } = useContext(AuthContext);
 
   const logout = () => {
-    authCall(`${url}/logout`, "GET");
+    authCall(`/logout`, "GET");
     setUser(null);
     Cookies.remove("user");
     history.push("/login");
