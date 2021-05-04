@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/remoTalky.client/static/css/main.23b52938.chunk.css",
+    "main.js": "/remoTalky.client/static/js/main.63d0650b.chunk.js",
+    "main.js.map": "/remoTalky.client/static/js/main.63d0650b.chunk.js.map",
+    "runtime-main.js": "/remoTalky.client/static/js/runtime-main.a40c6171.js",
+    "runtime-main.js.map": "/remoTalky.client/static/js/runtime-main.a40c6171.js.map",
+    "static/css/2.8e0b6853.chunk.css": "/remoTalky.client/static/css/2.8e0b6853.chunk.css",
+    "static/js/2.89124b64.chunk.js": "/remoTalky.client/static/js/2.89124b64.chunk.js",
+    "static/js/2.89124b64.chunk.js.map": "/remoTalky.client/static/js/2.89124b64.chunk.js.map",
+    "static/js/3.a7c82511.chunk.js": "/remoTalky.client/static/js/3.a7c82511.chunk.js",
+    "static/js/3.a7c82511.chunk.js.map": "/remoTalky.client/static/js/3.a7c82511.chunk.js.map",
+    "index.html": "/remoTalky.client/index.html",
+    "service-worker.js": "/remoTalky.client/service-worker.js",
+    "service-worker.js.map": "/remoTalky.client/service-worker.js.map",
+    "static/css/2.8e0b6853.chunk.css.map": "/remoTalky.client/static/css/2.8e0b6853.chunk.css.map",
+    "static/css/main.23b52938.chunk.css.map": "/remoTalky.client/static/css/main.23b52938.chunk.css.map",
+    "static/js/2.89124b64.chunk.js.LICENSE.txt": "/remoTalky.client/static/js/2.89124b64.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a40c6171.js",
+    "static/css/2.8e0b6853.chunk.css",
+    "static/js/2.89124b64.chunk.js",
+    "static/css/main.23b52938.chunk.css",
+    "static/js/main.63d0650b.chunk.js"
+  ]
+}
