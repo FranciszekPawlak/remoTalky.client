@@ -23,7 +23,7 @@ export const Chat = () => {
   const divRef = useRef(null);
 
   useEffect(() => {
-    const socket = io(config.chatSocektUrl);
+    const socket = io(config.chatSocektUrl, { transports: ["websocket"] });
     if (groupDesktop) {
       setSocket(socket);
 

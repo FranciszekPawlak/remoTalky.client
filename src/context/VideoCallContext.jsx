@@ -19,7 +19,7 @@ export const VideoCallContextProvider = ({ children }) => {
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io(config.videoSocketUlr);
+    socket.current = io(config.videoSocketUlr, { transports: ["websocket"] });
     socket.current.on("incomming call", (group) => {
       setIncommingCall(group);
     });

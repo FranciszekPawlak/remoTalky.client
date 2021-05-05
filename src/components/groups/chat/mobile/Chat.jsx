@@ -23,7 +23,7 @@ export const Chat = () => {
   const [initScroll, setInitScroll] = useState(true);
   const divRef = useRef(null);
   useEffect(() => {
-    const socket = io(config.chatSocektUrl);
+    const socket = io(config.chatSocektUrl, { transports: ["websocket"] });
     if (groupMobile) {
       setSocket(socket);
 
