@@ -2,6 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { downloadBlob } from "helpers/downloadBlob";
 import { config } from "config";
+import * as Cookies from "js-cookie";
 
 export const callApi = async (
   url,
@@ -12,11 +13,12 @@ export const callApi = async (
     "Content-Type": "application/json",
   }
 ) => {
+  const token = Cookies.get("token");
   try {
     const res = await axios({
       method: method,
       url: `${config.apiUrl}${url}`,
-      headers: headers,
+      headers: { ...headers, Authorization: token },
       data: body,
       withCredentials: true,
     });
@@ -32,11 +34,14 @@ export const callApi = async (
 };
 
 export const authCall = async (url, method = "GET", body = null) => {
+  const token = Cookies.get("token");
+
   const res = await axios({
     method: method,
     url: `${config.apiUrl}${url}`,
     headers: {
       "Content-Type": "application/json",
+      Authorization: token,
     },
     data: body,
     withCredentials: true,
@@ -45,10 +50,13 @@ export const authCall = async (url, method = "GET", body = null) => {
 };
 
 export const swrCall = async (url) => {
+  const token = Cookies.get("token");
+
   const res = await axios({
     url: `${config.apiUrl}${url}`,
     headers: {
       "Content-Type": "application/json",
+      Authorization: token,
     },
     withCredentials: true,
   });
@@ -56,6 +64,8 @@ export const swrCall = async (url) => {
 };
 
 export const apiDownload = async (url, data) => {
+  const token = Cookies.get("token");
+
   try {
     const res = await axios({
       url: `${config.apiUrl}${url}`,
@@ -63,6 +73,9 @@ export const apiDownload = async (url, data) => {
       data: data,
       withCredentials: true,
       responseType: "blob",
+      headers: {
+        Authorization: token,
+      },
     });
     downloadBlob(res.data);
   } catch (err) {

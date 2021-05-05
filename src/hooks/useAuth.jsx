@@ -14,7 +14,8 @@ export const useAuth = () => {
       const { status, data } = res;
       if (status === 200 && data.username && data.role) {
         setUser(data);
-        Cookies.set("user", JSON.stringify(data), { expires: 7 });
+        Cookies.set("user", JSON.stringify(data), { expires: 14 });
+        Cookies.set("token", data.token, { expires: 14 });
       } else {
         setUser(null);
         history.push("/login");
