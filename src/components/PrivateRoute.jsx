@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Route } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import { useAuth } from "../hooks/useAuth";
-import { Spinner } from "./Spinner";
+import { AuthContext } from "context/AuthContext";
+import { useAuth } from "hooks/useAuth";
+import { Spinner } from "components/Spinner";
 
 export const PrivateRoute = ({ component: Component, ...rest }) => {
   const { user } = useContext(AuthContext);

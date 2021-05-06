@@ -1,22 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, Suspense, lazy } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { Switch, Route } from "react-router-dom";
 import { createTheme } from "./style/theme";
-import { Home } from "./components/Home";
-import { Calendar } from "./components/calendar";
-import { Files } from "./components/files";
-import { Account } from "./components/account/Account";
 import { Login } from "./components/Login";
 import { Logout } from "./components/Logout";
 import { AuthContext } from "./context/AuthContext";
-import { Groups } from "./components/groups";
-import { VideoCall } from "./components/groups/videoCall/VideoCall";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { IncommingCall } from "./components/IncommingCall";
+import { Spinner } from "components/Spinner";
 import "style/App.css";
 import "react-toastify/dist/ReactToastify.css";
+
+const Home = lazy(() => import("./components/Home"));
+const Calendar = lazy(() => import("./components/calendar"));
+const Files = lazy(() => import("./components/files"));
+const Account = lazy(() => import("./components/account/Account"));
+const Groups = lazy(() => import("./components/groups"));
+const VideoCall = lazy(() => import("./components/groups/videoCall/VideoCall"));
 
 export const App = () => {
   const context = useContext(AuthContext);
@@ -27,16 +29,18 @@ export const App = () => {
       <CssBaseline />
       <div className="App">
         <IncommingCall />
-        <Switch>
-          <PrivateRoute exact path="/" component={Home} />
-          <PrivateRoute path="/groups" component={Groups} />
-          <PrivateRoute path="/videoCall/:id" component={VideoCall} />
-          <PrivateRoute path="/calendar" component={Calendar} />
-          <PrivateRoute path="/files" component={Files} />
-          <PrivateRoute path="/account" component={Account} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/login" component={Login} />
-        </Switch>
+        <Suspense fallback={<Spinner />}>
+          <Switch>
+            <PrivateRoute exact path="/" component={Home} />
+            <PrivateRoute path="/groups" component={Groups} />
+            <PrivateRoute path="/videoCall/:id" component={VideoCall} />
+            <PrivateRoute path="/calendar" component={Calendar} />
+            <PrivateRoute path="/files" component={Files} />
+            <PrivateRoute path="/account" component={Account} />
+            <Route path="/logout" component={Logout} />
+            <Route path="/login" component={Login} />
+          </Switch>
+        </Suspense>
         <ToastContainer
           position="bottom-right"
           autoClose={7000}

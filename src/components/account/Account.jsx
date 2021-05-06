@@ -14,7 +14,7 @@ import {
 import { CreateAccount } from "components/account/CreateAccount";
 import { ResetPassword } from "components/account/ResetPassword";
 
-export const Account = () => {
+const Account = () => {
   const history = useHistory();
   const { setTheme, theme, user } = useContext(AuthContext);
 
@@ -89,3 +89,4 @@ export const Account = () => {
     </Layout>
   );
 };
+export default Account;

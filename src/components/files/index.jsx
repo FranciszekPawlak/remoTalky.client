@@ -9,7 +9,7 @@ import { columns } from "components/files/columns";
 import useSWR from "swr";
 import { UploadDialog } from "components/files/UploadDialog";
 import "style/files/index.css";
-export const Files = () => {
+const Files = () => {
   const { url } = useContext(AuthContext);
   const [selection, setSelection] = useState([]);
   const [open, setOpen] = useState(false);
@@ -95,3 +95,5 @@ export const Files = () => {
     </Layout>
   );
 };
+
+export default Files;

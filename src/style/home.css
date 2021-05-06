@@ -1,0 +1,16 @@
+.home-container{
+    height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.home-container h1{
+    margin-top: 80px;
+}
+
+.home-container img{
+    width: 40vw;
+    height: 40vw;
+}

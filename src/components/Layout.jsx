@@ -15,22 +15,22 @@ export const Layout = ({ children }) => {
       <nav>
         <ul>
           <li>
-            <Link to="/groups">
+            <Link to="/groups" aria-label="groups">
               <FontAwesomeIcon icon={faCommentAlt} />
             </Link>
           </li>
           <li>
-            <Link to="/calendar">
+            <Link to="/calendar" aria-label="calendar">
               <FontAwesomeIcon icon={faCalendarAlt} />
             </Link>
           </li>
           <li>
-            <Link to="/files">
+            <Link to="/files" aria-label="files">
               <FontAwesomeIcon icon={faFileAlt} />
             </Link>
           </li>
           <li>
-            <Link to="/account">
+            <Link to="/account" aria-label="account">
               <FontAwesomeIcon icon={faCogs} />
             </Link>
           </li>

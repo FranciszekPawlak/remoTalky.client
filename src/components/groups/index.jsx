@@ -7,7 +7,7 @@ import { GroupListContextProvider } from "context/GroupListContext";
 import { GroupsDesktop } from "components/groups/chat/desktop";
 import { GroupsMobile } from "components/groups/chat/mobile";
 
-export const Groups = () => {
+const Groups = () => {
   const isDesktopOrLaptop = useMediaQuery({ minWidth: 800 });
 
   return (
@@ -21,3 +21,4 @@ export const Groups = () => {
     </Layout>
   );
 };
+export default Groups;

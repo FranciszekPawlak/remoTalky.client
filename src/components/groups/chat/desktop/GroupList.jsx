@@ -99,7 +99,7 @@ export const GroupList = () => {
             {/* <Link */}
             <a
               className="conversation-video-link"
-              href={`/videoCall/${element._id}`}
+              href={`/remoTalky.client/#/videoCall/${element._id}`}
               target="_blank"
               rel="noreferrer"
               // to={`/videoCall/${element._id}`}

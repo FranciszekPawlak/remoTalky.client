@@ -10,7 +10,7 @@ import { AuthContext } from "context/AuthContext";
 import { Video } from "components/groups/videoCall/Video";
 import "style/groups/video.css";
 
-export const VideoCall = () => {
+const VideoCall = () => {
   const { socket, setIncommingCall } = useContext(VideoCallContext);
   const { user } = useContext(AuthContext);
   const [peers, setPeers] = useState([]);
@@ -174,3 +174,4 @@ export const VideoCall = () => {
     </div>
   );
 };
+export default VideoCall;

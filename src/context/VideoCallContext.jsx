@@ -19,10 +19,14 @@ export const VideoCallContextProvider = ({ children }) => {
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io(config.videoSocketUlr, { transports: ["websocket"] });
+    socket.current = io.connect(config.videoSocketUlr, {
+      path: "/socket.io/webrtc",
+      // transports: ["websocket"],
+    });
     socket.current.on("incomming call", (group) => {
       setIncommingCall(group);
     });
+
     return () => socket.current.emit("disconnect");
   }, [,]);
 
