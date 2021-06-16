@@ -1,6 +1,6 @@
 # remoTalky.client
 
-Demo: franciszekpawlak.github.io/remoTalky.client
+Demo: https://franciszekpawlak.github.io/remoTalky.client
 
 Demo accounts:
 mikolaj@gmail.com / alicja@gmail.com
